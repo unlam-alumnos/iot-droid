@@ -16,9 +16,10 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/tb_MinRange"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/lb_title_activity_config"
         android:layout_alignLeft="@+id/lb_title_activity_config"
-        android:layout_alignStart="@+id/lb_title_activity_config" />
+        android:layout_alignStart="@+id/lb_title_activity_config"
+        android:layout_marginTop="91dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,5 +61,16 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_upd_range"
+        android:id="@+id/btn_upd_range"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/lb_MinRange"
+        android:layout_alignStart="@+id/lb_MinRange"
+        android:layout_alignRight="@+id/editText"
+        android:layout_alignEnd="@+id/editText" />
 
 </RelativeLayout>
