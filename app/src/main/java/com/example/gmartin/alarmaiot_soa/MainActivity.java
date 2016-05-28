@@ -5,36 +5,44 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
+    private Switch switchOnOff;
+    private Button btnConfig;
+    private Button btnStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        switchOnOff = (Switch) findViewById(R.id.switch_on_off);
+        btnConfig = (Button) findViewById(R.id.btn_config);
+        btnStatus = (Button) findViewById(R.id.btn_status);
+
+        switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                new NetworkTask().execute("http://192.168.1.72:8080/app/rest/alarm/" + (isChecked == true ? "on" : "off"));
+            }
+        });
+
         initNavigation();
-        getAlarmStatusFromWS();
+        initAlarmStatusFromWS();
     }
 
-    private void getAlarmStatusFromWS() {
+    private void initAlarmStatusFromWS() {
         new NetworkTask(new Callback() {
             @Override
             public void run(String result) {
-                System.out.println("- ESTADO ALARMA :" + String.valueOf(result));
+                switchOnOff.setChecked(Boolean.valueOf(result));
             }
         }).execute("http://192.168.1.72:8080/app/rest/alarm/status");
     }
 
     private void initNavigation() {
-        Button btnConfig = (Button)findViewById(R.id.btn_config);
-        Button btnStatus = (Button)findViewById(R.id.btn_status);
-
         btnConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

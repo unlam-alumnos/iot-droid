@@ -14,6 +14,9 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
 
     private Callback callback;
 
+    public NetworkTask() {
+    }
+
     public NetworkTask(Callback callback) {
         this.callback = callback;
     }
