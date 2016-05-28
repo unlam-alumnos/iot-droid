@@ -1,2 +1,0 @@
-# iot-droid
-IOT Android
