@@ -2,6 +2,12 @@
     <string name="app_name">AlarmaIOT-SOA</string>
     <string name="btn_status">ESTADO</string>
     <string name="btn_config">CONFIGURACION</string>
+
+    <string name="title_activity_config">Configuracion</string>
     <string name="config_lb_min_range">Mínimo</string>
     <string name="config_lb_max_range">Máximo</string>
+
+    <string name="title_activity_status">Estado</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">NNº C</string>
 </resources>

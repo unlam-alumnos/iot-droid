@@ -17,8 +17,8 @@
         android:ems="10"
         android:id="@+id/tb_MinRange"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignLeft="@+id/lb_title_activity_config"
+        android:layout_alignStart="@+id/lb_title_activity_config" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,9 +37,9 @@
         android:ems="10"
         android:id="@+id/editText"
         android:layout_marginTop="79dp"
-        android:layout_below="@+id/tb_MinRange"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/lb_MinRange"
+        android:layout_toRightOf="@+id/lb_MinRange"
+        android:layout_toEndOf="@+id/lb_MinRange" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,4 +50,15 @@
         android:layout_alignBottom="@+id/editText"
         android:layout_toLeftOf="@+id/editText"
         android:layout_toStartOf="@+id/editText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/title_activity_config"
+        android:id="@+id/lb_title_activity_config"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
 </RelativeLayout>
