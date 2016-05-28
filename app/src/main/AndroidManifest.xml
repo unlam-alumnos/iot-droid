@@ -18,11 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ConfigActivity"></activity>
-        <activity
-            android:name=".StatusActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_status"
-            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>
