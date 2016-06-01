@@ -26,7 +26,7 @@ public class ConfigActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String min = tbMinRange.getText().toString();
                 String max = tbMaxRange.getText().toString();
-                new NetworkTask().execute("http://192.168.1.72:8080/app/rest/temperature/setlimits?min=" + min + "&max=" + max);
+                setConfigValuesInWS(min, max);
             }
         });
 
@@ -34,6 +34,9 @@ public class ConfigActivity extends AppCompatActivity {
 
     }
 
+    private void setConfigValuesInWS(String min, String max) {
+        new NetworkTask().execute("http://192.168.1.72:8080/app/rest/temperature/setlimits?min=" + min + "&max=" + max);
+    }
 
     private void getConfigValuesFromWS() {
         new NetworkTask(new Callback() {
