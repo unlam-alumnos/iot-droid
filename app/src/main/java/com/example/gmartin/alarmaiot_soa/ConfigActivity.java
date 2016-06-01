@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 
 import com.google.gson.Gson;
 
@@ -31,12 +30,12 @@ public class ConfigActivity extends AppCompatActivity {
             }
         });
 
-        initConfigValuesFromWS();
+        getConfigValuesFromWS();
 
     }
 
 
-    private void initConfigValuesFromWS() {
+    private void getConfigValuesFromWS() {
         new NetworkTask(new Callback() {
             @Override
             public void run(String result) {
