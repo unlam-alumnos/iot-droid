@@ -12,20 +12,33 @@ import com.iot.rest.Callback;
 import com.iot.rest.NetworkTask;
 import com.iot.dto.TemperatureLimits;
 
+/**
+ * Pantalla de configuración
+ */
 public class ConfigActivity extends AppCompatActivity {
     private EditText tbMinRange;
     private EditText tbMaxRange;
-    private Button btnActualizar;
+    private Button btnUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_config);
 
-        tbMinRange = (EditText) findViewById(R.id.tb_MinRange);
-        tbMaxRange = (EditText) findViewById(R.id.tb_MaxRange);
-        btnActualizar = (Button) findViewById(R.id.btn_upd_range);
-        btnActualizar.setOnClickListener(new View.OnClickListener() {
+        this.tbMinRange = (EditText) findViewById(R.id.tb_MinRange);
+        this.tbMaxRange = (EditText) findViewById(R.id.tb_MaxRange);
+        this.btnUpdate = (Button) findViewById(R.id.btn_upd_range);
+
+        initButtons();
+        initRangeValuesFromWS();
+    }
+
+    /**
+     * Inicializa el comportamiento de los botones
+     */
+    private void initButtons() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String min = tbMinRange.getText().toString();
@@ -33,23 +46,30 @@ public class ConfigActivity extends AppCompatActivity {
                 setConfigValuesInWS(min, max);
             }
         });
-
-        getConfigValuesFromWS();
-
     }
 
-    private void setConfigValuesInWS(String min, String max) {
-        new NetworkTask().execute("http://192.168.1.72:8080/app/rest/temperature/setlimits?min=" + min + "&max=" + max);
-    }
-
-    private void getConfigValuesFromWS() {
+    /**
+     * Obtiene los límites de temperatura actuales y los inserta en las cajas de texto correspondientes
+     */
+    private void initRangeValuesFromWS() {
         new NetworkTask(new Callback() {
             @Override
             public void run(String result) {
-                TemperatureLimits temperatureLimits = new Gson().fromJson(result, TemperatureLimits.class);
+                TemperatureLimits temperatureLimits = new Gson().fromJson(result,
+                        TemperatureLimits.class);
                 tbMinRange.setText(String.valueOf(temperatureLimits.getMin()));
                 tbMaxRange.setText(String.valueOf(temperatureLimits.getMax()));
             }
         }).execute("http://192.168.1.72:8080/app/rest/temperature/limits");
+    }
+
+    /**
+     * Actualiza los límites de temperatura de acuerdo a los recibidos por parámetro
+     * @param min
+     * @param max
+     */
+    private void setConfigValuesInWS(String min, String max) {
+        new NetworkTask().execute("http://192.168.1.72:8080/app/rest/temperature/setlimits?min="
+                + min + "&max=" + max);
     }
 }
