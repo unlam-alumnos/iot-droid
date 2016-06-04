@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AlarmaIOT-SOA</string>
+    <string name="app_name">Alarma IOT</string>
     <string name="btn_status">ESTADO</string>
     <string name="btn_config">CONFIGURACION</string>
     <string name="switch_on_off">Alarma encendida</string>
