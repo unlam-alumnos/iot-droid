@@ -1,4 +1,4 @@
-package com.iot;
+package com.iot.dto;
 
 import java.io.Serializable;
 

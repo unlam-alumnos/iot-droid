@@ -1,4 +1,4 @@
-package com.iot;
+package com.iot.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 
 import com.example.gmartin.alarmaiot_soa.R;
 import com.google.gson.Gson;
+import com.iot.rest.Callback;
+import com.iot.rest.NetworkTask;
+import com.iot.dto.TemperatureLimits;
 
 public class ConfigActivity extends AppCompatActivity {
     private EditText tbMinRange;
