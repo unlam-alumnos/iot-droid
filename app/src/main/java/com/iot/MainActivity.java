@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         initNavigation();
         initAlarmStatusFromWS();
 
-
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                 TemperatureLimits.class);
                         RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout_main);
                         if (temperature < temperatureLimits.getMin()) {
-                            rl.setBackgroundColor(Color.rgb(255, 215, 0));
+                            rl.setBackgroundColor(Color.rgb(0, 128, 255));
                             if (!alreadyVibratedMedium) {
                                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                 v.vibrate(500);
