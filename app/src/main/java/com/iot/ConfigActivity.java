@@ -1,4 +1,4 @@
-package com.example.gmartin.alarmaiot_soa;
+package com.iot;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.gmartin.alarmaiot_soa.R;
 import com.google.gson.Gson;
 
 public class ConfigActivity extends AppCompatActivity {

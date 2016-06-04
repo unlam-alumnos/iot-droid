@@ -1,4 +1,4 @@
-package com.example.gmartin.alarmaiot_soa;
+package com.iot;
 
 import android.os.AsyncTask;
 

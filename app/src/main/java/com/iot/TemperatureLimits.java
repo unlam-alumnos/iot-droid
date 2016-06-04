@@ -1,4 +1,4 @@
-package com.example.gmartin.alarmaiot_soa;
+package com.iot;
 
 import java.io.Serializable;
 

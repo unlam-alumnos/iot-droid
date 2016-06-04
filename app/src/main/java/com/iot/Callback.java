@@ -1,4 +1,4 @@
-package com.example.gmartin.alarmaiot_soa;
+package com.iot;
 
 /**
  * Created by gmartin on 28/05/2016.
