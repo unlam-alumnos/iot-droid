@@ -13,6 +13,9 @@ import com.iot.rest.Callback;
 import com.iot.rest.NetworkTask;
 import com.iot.dto.TemperatureLimits;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Pantalla de configuración
  */
@@ -20,6 +23,8 @@ public class ConfigActivity extends AppCompatActivity {
     private EditText tbMinRange;
     private EditText tbMaxRange;
     private Button btnUpdate;
+
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,36 @@ public class ConfigActivity extends AppCompatActivity {
         this.btnUpdate = (Button) findViewById(R.id.btn_upd_range);
 
         initButtons();
-        initRangeValuesFromWS();
+        initRange();
+        initTimer();
+    }
+
+    /**
+     * Inicia el timer que consulta la temperatura cada 1500 milisegundos
+     */
+    private void initTimer() {
+        this.timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                execute();
+            }
+        };
+        this.timer.schedule(timerTask, 0, 1500);
+    }
+
+    /**
+     * Ejecuta la consulta y actualización segun datos en la alarma
+     */
+    private void execute() {
+        new NetworkTask(new Callback() {
+            @Override
+            public void run(String result) {
+                if (result == null) {
+                    finish();
+                }
+            }
+        }).execute(UrlBuilder.build("alarm/status"));
     }
 
     /**
@@ -52,7 +86,7 @@ public class ConfigActivity extends AppCompatActivity {
     /**
      * Obtiene los límites de temperatura actuales y los inserta en las cajas de texto correspondientes
      */
-    private void initRangeValuesFromWS() {
+    private void initRange() {
         new NetworkTask(new Callback() {
             @Override
             public void run(String result) {
@@ -70,7 +104,11 @@ public class ConfigActivity extends AppCompatActivity {
      * @param max
      */
     private void setConfigValuesInWS(String min, String max) {
-        new NetworkTask().execute(
-                UrlBuilder.build("temperature/temperature/setlimits?min=" + min + "&max=" + max));
+        new NetworkTask(new Callback() {
+            @Override
+            public void run(String result) {
+                finish();
+            }
+        }).execute(UrlBuilder.build("temperature/setlimits?min=" + min + "&max=" + max));
     }
 }

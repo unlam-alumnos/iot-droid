@@ -60,8 +60,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         this.switchOnOff = (Switch) findViewById(R.id.switch_on_off);
 
         initButtons();
-        initAlarmStatus();
         initTimer();
+
+        reset();
     }
 
     /**
@@ -91,24 +92,47 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                if (alarmOn) {
-                    updateTemperature();
-                }
+                execute();
             }
         };
         this.timer.schedule(timerTask, 0, 1500);
     }
 
     /**
+     * Ejecuta la consulta y actualización segun datos en la alarma
+     */
+    private void execute() {
+        new NetworkTask(new Callback() {
+            @Override
+            public void run(String result) {
+                boolean hasResult = result != null;
+                if (!hasResult) {
+                    reset();
+                } else {
+                    alarmOn = Boolean.valueOf(result);
+                    switchOnOff.setChecked(alarmOn);
+                    updateTemperature();
+                }
+                switchOnOff.setEnabled(hasResult);
+                btnConfig.setEnabled(hasResult);
+            }
+        }).execute(UrlBuilder.build("alarm/status"));
+    }
+
+    /**
      * Obtiene la temperatura actual y la procesa
      */
     private void updateTemperature() {
-        new NetworkTask(new Callback() {
-            @Override
-            public void run(String temp) {
-                processTemperature(temp);
-            }
-        }).execute(UrlBuilder.build("temperature/read"));
+        if (alarmOn) {
+            new NetworkTask(new Callback() {
+                @Override
+                public void run(String temp) {
+                    processTemperature(temp);
+                }
+            }).execute(UrlBuilder.build("temperature/read"));
+        } else {
+            reset();
+        }
     }
 
     /**
@@ -197,43 +221,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
      * @param isOn
      */
     private void turnAlarm(final boolean isOn) {
-        new NetworkTask(new Callback() {
-            @Override
-            public void run(String result) {
-                alarmOn = isOn;
-                initTemperature();
-                if (!alarmOn) {
-                    rl.setBackgroundColor(Color.WHITE);
-                }
-            }
-        }).execute(UrlBuilder.build("alarm/" + (isOn == true ? "on" : "off")));
-    }
-
-    /**
-     * Obtiene el estado actual de la alarma, actualiza el switch de encendido e invoca al método
-     * initTemperature()
-     */
-    private void initAlarmStatus() {
-        new NetworkTask(new Callback() {
-            @Override
-            public void run(String result) {
-                alarmOn = Boolean.valueOf(result);
-                initTemperature();
-                switchOnOff.setChecked(alarmOn);
-            }
-        }).execute(UrlBuilder.build("alarm/status"));
-    }
-
-    /**
-     * De acuerdo al estado actual de la alarma inicializa la temperatura con un placeholder o invoca
-     * al método correspondiente para obtener la temperatura actual
-     */
-    private void initTemperature() {
-        if (!alarmOn) {
-            textTemperature.setText(Constants.TEMPERATURE_NONE);
-        } else {
-            updateTemperature();
+        if(!isOn) {
+            reset();
         }
+        new NetworkTask().execute(UrlBuilder.build("alarm/" + (isOn == true ? "on" : "off")));
+    }
+
+    private void reset() {
+        alarmOn = false;
+        switchOnOff.setChecked(false);
+        rl.setBackgroundColor(Color.WHITE);
+        textTemperature.setText(Constants.TEMPERATURE_NONE);
     }
 
     protected void onResume() {

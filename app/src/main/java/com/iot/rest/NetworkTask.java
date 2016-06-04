@@ -27,6 +27,7 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
             URL url = new URL(params[0]);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            connection.setReadTimeout(1000 * 3);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
