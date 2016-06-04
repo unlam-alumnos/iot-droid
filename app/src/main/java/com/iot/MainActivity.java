@@ -94,17 +94,17 @@ public class MainActivity extends AppCompatActivity {
                                 TemperatureLimits.class);
                         RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout_main);
                         if (temperature < temperatureLimits.getMin()) {
-                            rl.setBackgroundColor(Color.rgb(127, 255, 0));
-                            alreadyVibratedMedium = false;
-                            alreadyVibratedHigh = false;
-                        } else if (temperature >= temperatureLimits.getMin()
-                                && temperature <= temperatureLimits.getMax()) {
                             rl.setBackgroundColor(Color.rgb(255, 215, 0));
                             if (!alreadyVibratedMedium) {
                                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                 v.vibrate(500);
                                 alreadyVibratedMedium = true;
                             }
+                        } else if (temperature >= temperatureLimits.getMin()
+                                && temperature <= temperatureLimits.getMax()) {
+                            rl.setBackgroundColor(Color.rgb(127, 255, 0));
+                            alreadyVibratedMedium = false;
+                            alreadyVibratedHigh = false;
                         } else {
                             rl.setBackgroundColor(Color.rgb(250, 128, 114));
                             if (!alreadyVibratedHigh) {
