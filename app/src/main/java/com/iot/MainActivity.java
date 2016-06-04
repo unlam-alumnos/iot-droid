@@ -3,6 +3,10 @@ package com.iot;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +25,10 @@ import java.text.NumberFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+    private SensorManager mSensorManager;
+    private Sensor mSensor;
+
     private boolean status;
     private Switch switchOnOff;
     private Button btnConfig;
@@ -36,23 +43,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         timer = new Timer();
 
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         btnConfig = (Button) findViewById(R.id.btn_config);
         textTemperature = (TextView) findViewById(R.id.text_temperature);
         switchOnOff = (Switch) findViewById(R.id.switch_on_off);
         switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-                new NetworkTask(new Callback() {
-                    @Override
-                    public void run(String result) {
-                        status = isChecked;
-                        initTemperature(isChecked);
-                        if (!isChecked) {
-                            RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout_main);
-                            rl.setBackgroundColor(Color.WHITE);
-                        }
-                    }
-                }).execute("http://192.168.1.72:8080/app/rest/alarm/" + (isChecked == true ? "on" : "off"));
+                turnAlarm(isChecked);
             }
         });
 
@@ -68,6 +67,30 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         timer.schedule(timerTask, 0, 1500);
+    }
+
+    private void turnAlarm(final boolean isChecked) {
+        new NetworkTask(new Callback() {
+            @Override
+            public void run(String result) {
+                status = isChecked;
+                initTemperature(isChecked);
+                if (!isChecked) {
+                    RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout_main);
+                    rl.setBackgroundColor(Color.WHITE);
+                }
+            }
+        }).execute("http://192.168.1.72:8080/app/rest/alarm/" + (isChecked == true ? "on" : "off"));
+    }
+
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
     }
 
     private void initTemperature(boolean alarmOn) {
@@ -137,5 +160,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.values[0] == 0) {
+            turnAlarm(false);
+            switchOnOff.setChecked(false);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
