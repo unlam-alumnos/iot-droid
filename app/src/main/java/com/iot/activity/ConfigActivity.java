@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.example.gmartin.alarmaiot_soa.R;
 import com.google.gson.Gson;
+import com.iot.common.UrlBuilder;
 import com.iot.rest.Callback;
 import com.iot.rest.NetworkTask;
 import com.iot.dto.TemperatureLimits;
@@ -60,7 +61,7 @@ public class ConfigActivity extends AppCompatActivity {
                 tbMinRange.setText(String.valueOf(temperatureLimits.getMin()));
                 tbMaxRange.setText(String.valueOf(temperatureLimits.getMax()));
             }
-        }).execute("http://192.168.1.72:8080/app/rest/temperature/limits");
+        }).execute(UrlBuilder.build("temperature/limits"));
     }
 
     /**
@@ -69,7 +70,7 @@ public class ConfigActivity extends AppCompatActivity {
      * @param max
      */
     private void setConfigValuesInWS(String min, String max) {
-        new NetworkTask().execute("http://192.168.1.72:8080/app/rest/temperature/setlimits?min="
-                + min + "&max=" + max);
+        new NetworkTask().execute(
+                UrlBuilder.build("temperature/temperature/setlimits?min=" + min + "&max=" + max));
     }
 }

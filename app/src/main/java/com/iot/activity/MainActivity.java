@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.gmartin.alarmaiot_soa.R;
 import com.google.gson.Gson;
 import com.iot.common.Constants;
+import com.iot.common.UrlBuilder;
 import com.iot.rest.Callback;
 import com.iot.rest.NetworkTask;
 import com.iot.dto.TemperatureLimits;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void run(String temp) {
                 processTemperature(temp);
             }
-        }).execute("http://192.168.1.72:8080/app/rest/temperature/read");
+        }).execute(UrlBuilder.build("temperature/read"));
     }
 
     /**
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void run(String limits) {
                 processLimitsAndTemperature(temperature, limits);
             }
-        }).execute("http://192.168.1.72:8080/app/rest/temperature/limits");
+        }).execute(UrlBuilder.build("temperature/limits"));
     }
 
     /**
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     rl.setBackgroundColor(Color.WHITE);
                 }
             }
-        }).execute("http://192.168.1.72:8080/app/rest/alarm/" + (isOn == true ? "on" : "off"));
+        }).execute(UrlBuilder.build("alarm/" + (isOn == true ? "on" : "off")));
     }
 
     /**
@@ -220,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 initTemperature();
                 switchOnOff.setChecked(alarmOn);
             }
-        }).execute("http://192.168.1.72:8080/app/rest/alarm/status");
+        }).execute(UrlBuilder.build("alarm/status"));
     }
 
     /**
