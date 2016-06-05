@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 } else {
                     alarmOn = Boolean.valueOf(result);
                     switchOnOff.setChecked(alarmOn);
+                    switchOnOff.setText(Constants.ALARM_ON_TEXT);
                     updateTemperature();
                 }
                 switchOnOff.setEnabled(hasResult);
@@ -228,10 +229,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void reset() {
-        alarmOn = false;
-        switchOnOff.setChecked(false);
-        rl.setBackgroundColor(Color.WHITE);
-        textTemperature.setText(Constants.TEMPERATURE_NONE);
+        this.alarmOn = false;
+        this.switchOnOff.setChecked(false);
+        this.switchOnOff.setText(Constants.ALARM_OFF_TEXT);
+        this.rl.setBackgroundColor(Color.WHITE);
+        this.textTemperature.setText(Constants.TEMPERATURE_NONE);
     }
 
     protected void onResume() {
