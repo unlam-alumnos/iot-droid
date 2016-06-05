@@ -17,9 +17,11 @@
         android:ems="10"
         android:id="@+id/tb_MinRange"
         android:layout_below="@+id/lb_title_activity_config"
+        android:layout_marginTop="91dp"
         android:layout_alignLeft="@+id/lb_title_activity_config"
         android:layout_alignStart="@+id/lb_title_activity_config"
-        android:layout_marginTop="91dp" />
+        android:layout_alignRight="@+id/lb_title_activity_config"
+        android:layout_alignEnd="@+id/lb_title_activity_config" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +29,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/config_lb_min_range"
         android:id="@+id/lb_MinRange"
-        android:layout_alignBottom="@+id/tb_MinRange"
+        android:layout_alignTop="@+id/tb_MinRange"
         android:layout_toLeftOf="@+id/tb_MinRange"
         android:layout_toStartOf="@+id/tb_MinRange" />
 
@@ -40,7 +42,8 @@
         android:layout_marginTop="79dp"
         android:layout_below="@+id/lb_MinRange"
         android:layout_toRightOf="@+id/lb_MinRange"
-        android:layout_toEndOf="@+id/lb_MinRange" />
+        android:layout_alignRight="@+id/tb_MinRange"
+        android:layout_alignEnd="@+id/tb_MinRange" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,9 +51,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/config_lb_max_range"
         android:id="@+id/lb_MaxRange"
-        android:layout_alignBottom="@+id/tb_MaxRange"
-        android:layout_toLeftOf="@+id/tb_MaxRange"
-        android:layout_toStartOf="@+id/tb_MaxRange" />
+        android:layout_alignTop="@+id/tb_MaxRange"
+        android:layout_alignRight="@+id/lb_MinRange"
+        android:layout_alignEnd="@+id/lb_MinRange" />
 
     <TextView
         android:layout_width="wrap_content"
