@@ -107,11 +107,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void run(String result) {
                 boolean hasResult = result != null;
                 if (!hasResult) {
-                    reset();
+                    if (alarmOn) {
+                        reset();
+                    }
                 } else {
-                    alarmOn = Boolean.valueOf(result);
-                    switchOnOff.setChecked(alarmOn);
-                    switchOnOff.setText(Constants.ALARM_ON_TEXT);
+                    boolean turning = Boolean.valueOf(result);
+                    if (alarmOn != turning) {
+                        switchOnOff.setChecked(turning);
+                        switchOnOff.setText(Constants.ALARM_ON_TEXT);
+                    }
+                    alarmOn = turning;
                     updateTemperature();
                 }
                 switchOnOff.setEnabled(hasResult);
