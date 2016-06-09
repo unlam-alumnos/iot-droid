@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.gmartin.alarmaiot_soa.R;
+import com.iot.gmartin.alarmaiot_soa.R;
 import com.google.gson.Gson;
 import com.iot.common.UrlBuilder;
 import com.iot.rest.Callback;

@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.gmartin.alarmaiot_soa.R;
+import com.iot.gmartin.alarmaiot_soa.R;
 import com.google.gson.Gson;
 import com.iot.common.Constants;
 import com.iot.common.UrlBuilder;
